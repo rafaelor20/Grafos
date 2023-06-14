@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Graph Visualization</title>
+    <style>
+        svg {
+            background-color: #f2f2f2;
+        }
+
+        .node {
+            fill: #ffffff;
+            stroke: #000000;
+            stroke-width: 1.5px;
+        }
+
+        .label {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .link {
+            fill: none;
+            stroke: #808080;
+            stroke-width: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <svg id="graph"></svg>
+
+    <script>
+        // Load the WebAssembly module
+        const wasmPath = 'matriz.wasm';
+        const imports = {};
+        fetch(wasmPath)
+            .then(response => response.arrayBuffer())
+            .then(buffer => WebAssembly.instantiate(buffer, imports))
+            .then(module => {
+                const instance = module.instance;
+
+                // Get the functions from the WebAssembly instance
+                const addVertex = instance.exports.addVertex;
+                const addEdge = instance.exports.addEdge;
+                const calculateDegree = instance.exports.calculateDegree;
+                const printGraph = instance.exports.printGraph;
+                const createGraph = instance.exports.createGraph;
+
+                // Create a graph object
+                const maxVertices = 10;
+                const graph = createGraph(maxVertices);
+
+                // Add vertices and edges
+                addVertex(graph, 0, 'A');
+                addVertex(graph, 1, 'B');
+                addVertex(graph, 2, 'C');
+                addEdge(graph, 0, 1);
+                addEdge(graph, 1, 2);
+
+                // Print the graph (for debugging purposes)
+                printGraph(graph);
+
+                // TODO: Create graphic representation of the graph using D3.js or any other library
+                // ...
+
+            })
+            .catch(error => {
+                console.error('Error loading WebAssembly module:', error);
+            });
+    </script>
+</body>
+
+</html>
