@@ -148,15 +148,22 @@ class GraphVisualizer:
 def createCompleteKnGraph(number):
   grafoKn =  Grafo("matriz_adjacencia", number)
   i = 0
-  for i < number:
-    grafoKn.adicionar_vertice("V"+i)
-    i++
+  while i < number:
+    grafoKn.adicionar_vertice( "V" + str(i) )
+    i = i + 1
   i = 0
   j = i+1
-  for i < number - 1:
+  while i < number - 2:
     grafoKn.adicionar_aresta(i, j)
-    i++
+    print(i)
+    print(j)
+    i = i + 1
     j = i + 1
+    
   if i>0:
     grafoKn.adicionar_aresta(j, 0)
   return grafoKn
+
+#Exemplo createCompleteKnGraph
+graphKn = createCompleteKnGraph(5)
+visualizer = GraphVisualizer(graphKn)
