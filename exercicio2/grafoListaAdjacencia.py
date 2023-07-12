@@ -81,5 +81,19 @@ class GrafoListaAdjacencia:
                     print(f"{self.vertices[i].rotulo} - {self.vertices[j].rotulo}")
 
         print("Graus dos vértices:")
+        total_grau = 0
+        num_vertices_impar = 0
+        num_vertices_par = 0
+
         for vertice in self.vertices:
+            total_grau += vertice.grau
             print(f"{vertice.rotulo}: {vertice.grau}")
+
+            if vertice.grau % 2 == 0:
+                num_vertices_par += 1
+            else:
+                num_vertices_impar += 1
+
+        print("Somatório do grau dos vértices:", total_grau)
+        print("Número de vértices de grau ímpar:", num_vertices_impar)
+        print("Número de vértices de grau par:", num_vertices_par)

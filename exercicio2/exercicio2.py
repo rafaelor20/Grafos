@@ -111,14 +111,73 @@ def creaeKRegularGraph(n, k):
     return grafo
 
 
+def is_bipartite(graph, X, Y):
+    color = {}  # Dictionary to store the color of each vertex
+
+    # Assign initial colors to the vertices in X and Y
+    for vertex in X:
+        color[vertex] = "X"
+    for vertex in Y:
+        color[vertex] = "Y"
+
+    # Perform graph coloring
+    for vertex in graph.vertices:
+        if vertex.rotulo in X:
+            current_color = "X"
+        else:
+            current_color = "Y"
+
+        for neighbor in graph.adjacencia[vertex.indice]:
+            if color.get(neighbor) == current_color:
+                return False  # Adjacent vertices have the same color, not bipartite
+
+    return True  # No adjacent vertices have the same color, bipartite
+
+
 # Exemplo createCompleteKnGraph
-n = 5
-graphKn = createCompleteKnGraph(5)
-visualizer = GraphVisualizer(graphKn)
+def exemploCreateCompleteKnGraph():
+    grafoKn = createCompleteKnGraph(5)
+    grafoKn.imprimir_grafo()
+    visualizer = GraphVisualizer(grafoKn)
+
 
 # Exemplo creaeKRegularGraph
-n = 8
-k = 4
-grafoKRegular = creaeKRegularGraph(n, k)
-grafoKRegular.imprimir_grafo()
-visualizer = GraphVisualizer(grafoKRegular)
+def exemploCreaeKRegularGraph():
+    n = 8
+    k = 4
+    grafoKRegular = creaeKRegularGraph(n, k)
+    grafoKRegular.imprimir_grafo()
+    visualizer = GraphVisualizer(grafoKRegular)
+
+
+# Exemplo is_bipartite
+def exemploIsBipartite():
+    # Create the graph
+    grafo = GrafoMatrizAdjacencia(6)
+    grafo.adicionar_vertice("A")
+    grafo.adicionar_vertice("B")
+    grafo.adicionar_vertice("C")
+    grafo.adicionar_vertice("D")
+    grafo.adicionar_vertice("E")
+    grafo.adicionar_vertice("F")
+
+    # Add edges
+    grafo.adicionar_aresta(0, 1)
+    grafo.adicionar_aresta(0, 2)
+    grafo.adicionar_aresta(1, 3)
+    grafo.adicionar_aresta(2, 4)
+    grafo.adicionar_aresta(3, 5)
+    grafo.adicionar_aresta(4, 5)
+
+    # Define the sets X and Y
+    X = {"A", "C", "E"}
+    Y = {"B", "D", "F"}
+
+    # Check if the graph is bipartite
+    is_bipartite_graph = is_bipartite(grafo, X, Y)
+    print(is_bipartite_graph)  # Output: True
+
+
+exemploCreateCompleteKnGraph()
+exemploCreaeKRegularGraph()
+exemploIsBipartite()
