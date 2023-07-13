@@ -1,20 +1,13 @@
-import tkinter as tk
 import math
+from vertice import Vertice
 
 
-class Vertice:
-    def __init__(self, indice, rotulo):
-        self.indice = indice
-        self.rotulo = rotulo
-        self.grau = 0
-
-
-class GrafoMatrizAdjacencia:
+class GrafoListaAdjacencia:
     def __init__(self, max_vertices):
         self.max_vertices = max_vertices
         self.vertices = []
         self.num_arestas = 0
-        self.adjacencia = [[0] * max_vertices for _ in range(max_vertices)]
+        self.adjacencia = [[] for _ in range(max_vertices)]
 
     def adicionar_vertice(self, rotulo):
         indice = len(self.vertices)
@@ -30,8 +23,8 @@ class GrafoMatrizAdjacencia:
         ):
             raise IndexError("Índice de vértice inválido")
 
-        self.adjacencia[indice_vertice1][indice_vertice2] = 1
-        self.adjacencia[indice_vertice2][indice_vertice1] = 1
+        self.adjacencia[indice_vertice1].append(indice_vertice2)
+        self.adjacencia[indice_vertice2].append(indice_vertice1)
 
         self.vertices[indice_vertice1].grau += 1
         self.vertices[indice_vertice2].grau += 1
@@ -46,8 +39,8 @@ class GrafoMatrizAdjacencia:
         ):
             raise IndexError("Índice de vértice inválido")
 
-        self.adjacencia[indice_vertice1][indice_vertice2] = 0
-        self.adjacencia[indice_vertice2][indice_vertice1] = 0
+        self.adjacencia[indice_vertice1].remove(indice_vertice2)
+        self.adjacencia[indice_vertice2].remove(indice_vertice1)
 
         self.vertices[indice_vertice1].grau -= 1
         self.vertices[indice_vertice2].grau -= 1
@@ -68,7 +61,7 @@ class GrafoMatrizAdjacencia:
         ):
             raise IndexError("Índice de vértice inválido")
 
-        return self.adjacencia[indice_vertice1][indice_vertice2] == 1
+        return indice_vertice2 in self.adjacencia[indice_vertice1]
 
     def imprimir_grafo(self):
         print("Número de vértices:", len(self.vertices))
@@ -97,3 +90,38 @@ class GrafoMatrizAdjacencia:
         print("Somatório do grau dos vértices:", total_grau)
         print("Número de vértices de grau ímpar:", num_vertices_impar)
         print("Número de vértices de grau par:", num_vertices_par)
+
+    def busca_em_profundidade_imprimir_rotulo(self, indice_vertice):
+        visitados = [False] * len(self.vertices)
+
+        self._dfs_imprimir_rotulo(indice_vertice, visitados)
+
+    def _dfs_imprimir_rotulo(self, indice_vertice, visitados):
+        visitados[indice_vertice] = True
+        print(self.vertices[indice_vertice].rotulo)
+
+        for vizinho in self.adjacencia[indice_vertice]:
+            if not visitados[vizinho]:
+                self._dfs_imprimir_rotulo(vizinho, visitados)
+
+    def busca_em_profundidade(self, indice_vertice):
+        visitados = [False] * len(self.vertices)
+        tempo = 0
+
+        for indice_vertice in range(len(self.vertices)):
+            if not visitados[indice_vertice]:
+                tempo = self._dfs(indice_vertice, visitados, tempo)
+
+    def _dfs(self, indice_vertice, visitados, tempo):
+        visitados[indice_vertice] = True
+        tempo += 1
+        self.vertices[indice_vertice].profundidade_entrada = tempo
+
+        for vizinho in self.adjacencia[indice_vertice]:
+            if not visitados[vizinho]:
+                tempo = self._dfs(vizinho, visitados, tempo)
+
+        tempo += 1
+        self.vertices[indice_vertice].profundidade_saida = tempo
+
+        return tempo
