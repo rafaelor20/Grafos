@@ -1,11 +1,13 @@
 import tkinter as tk
 import math
 
+
 class Vertice:
     def __init__(self, indice, rotulo):
         self.indice = indice
         self.rotulo = rotulo
         self.grau = 0
+
 
 class Grafo:
     def __init__(self, estrutura_dados, max_vertices):
@@ -25,7 +27,12 @@ class Grafo:
         self.vertices.append(vertice)
 
     def adicionar_aresta(self, indice_vertice1, indice_vertice2):
-        if indice_vertice1 < 0 or indice_vertice1 >= len(self.vertices) or indice_vertice2 < 0 or indice_vertice2 >= len(self.vertices):
+        if (
+            indice_vertice1 < 0
+            or indice_vertice1 >= len(self.vertices)
+            or indice_vertice2 < 0
+            or indice_vertice2 >= len(self.vertices)
+        ):
             raise IndexError("Índice de vértice inválido")
 
         if self.estrutura_dados == "matriz_adjacencia":
@@ -40,7 +47,12 @@ class Grafo:
         self.num_arestas += 1
 
     def remover_aresta(self, indice_vertice1, indice_vertice2):
-        if indice_vertice1 < 0 or indice_vertice1 >= len(self.vertices) or indice_vertice2 < 0 or indice_vertice2 >= len(self.vertices):
+        if (
+            indice_vertice1 < 0
+            or indice_vertice1 >= len(self.vertices)
+            or indice_vertice2 < 0
+            or indice_vertice2 >= len(self.vertices)
+        ):
             raise IndexError("Índice de vértice inválido")
 
         if self.estrutura_dados == "matriz_adjacencia":
@@ -61,7 +73,12 @@ class Grafo:
         return self.vertices[indice_vertice].grau
 
     def sao_vizinhos(self, indice_vertice1, indice_vertice2):
-        if indice_vertice1 < 0 or indice_vertice1 >= len(self.vertices) or indice_vertice2 < 0 or indice_vertice2 >= len(self.vertices):
+        if (
+            indice_vertice1 < 0
+            or indice_vertice1 >= len(self.vertices)
+            or indice_vertice2 < 0
+            or indice_vertice2 >= len(self.vertices)
+        ):
             raise IndexError("Índice de vértice inválido")
 
         if self.estrutura_dados == "matriz_adjacencia":
@@ -76,7 +93,7 @@ class Grafo:
         print("Arestas:")
         if self.estrutura_dados == "matriz_adjacencia":
             for i in range(len(self.vertices)):
-                for j in range(i+1, len(self.vertices)):
+                for j in range(i + 1, len(self.vertices)):
                     if self.adjacencia[i][j] == 1:
                         print(f"{self.vertices[i].rotulo} - {self.vertices[j].rotulo}")
         elif self.estrutura_dados == "lista_adjacencia":
@@ -88,6 +105,7 @@ class Grafo:
         print("Graus dos vértices:")
         for vertice in self.vertices:
             print(f"{vertice.rotulo}: {vertice.grau}")
+
 
 class GraphVisualizer:
     def __init__(self, grafo):
@@ -119,9 +137,13 @@ class GraphVisualizer:
     def draw_graph(self):
         for i, vertice in enumerate(self.grafo.vertices):
             x, y = self.vertex_positions[i]
-            self.canvas.create_oval(x - self.vertex_radius, y - self.vertex_radius,
-                                    x + self.vertex_radius, y + self.vertex_radius,
-                                    fill="lightblue")
+            self.canvas.create_oval(
+                x - self.vertex_radius,
+                y - self.vertex_radius,
+                x + self.vertex_radius,
+                y + self.vertex_radius,
+                fill="lightblue",
+            )
             self.canvas.create_text(x, y, text=vertice.rotulo)
 
         for i in range(len(self.grafo.vertices)):
@@ -131,7 +153,7 @@ class GraphVisualizer:
 
                 # Calculate the unit vector pointing from start to end
                 dx, dy = end_x - start_x, end_y - start_y
-                length = math.sqrt(dx ** 2 + dy ** 2)
+                length = math.sqrt(dx**2 + dy**2)
 
                 if length > 0:
                     unit_dx, unit_dy = dx / length, dy / length
@@ -142,7 +164,13 @@ class GraphVisualizer:
                     adjusted_end_x = end_x - self.vertex_radius * unit_dx
                     adjusted_end_y = end_y - self.vertex_radius * unit_dy
 
-                    self.canvas.create_line(adjusted_start_x, adjusted_start_y, adjusted_end_x, adjusted_end_y)
+                    self.canvas.create_line(
+                        adjusted_start_x,
+                        adjusted_start_y,
+                        adjusted_end_x,
+                        adjusted_end_y,
+                    )
+
 
 # Exemplo de uso:
 
