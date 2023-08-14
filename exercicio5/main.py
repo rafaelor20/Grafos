@@ -37,22 +37,6 @@ def createGraph(numberOfVertices=8):
                 arestas_arvore.append((u, v))
             else:
                 arestas_retorno.append((u, v))
-
-    """
-    print("Arestas da árvore:")
-    for u, v in arestas_arvore:
-        print(f"{grafo.vertices[u].rotulo} - {grafo.vertices[v].rotulo}")
-
-    print("Arestas de retorno:")
-    for u, v in arestas_retorno:
-        print(f"{grafo.vertices[u].rotulo} - {grafo.vertices[v].rotulo}")
-
-    for vertice in grafo.vertices:
-        print(f"Vértice: {vertice.rotulo}")
-        print(f"Profundidade de entrada: {vertice.profundidade_entrada}")
-        print(f"Profundidade de saída: {vertice.profundidade_saida}")
-        print()
-    """
     return grafo
 
 
@@ -169,6 +153,56 @@ def buscar_ciclo_com_g_v_maior_igual_2(grafo):
             ciclo = busca_em_profundidade_ciclo_com_g_v_maior_igual_2(grafo, vertice)
             if ciclo is not None:
                 return ciclo
+
+
+def find_cycle_with_edge(trail, edge_a):
+    cycle = []
+    a, b = edge_a  # Assuming edge_a is represented as a tuple (a, b)
+
+    # Find the position of edge 'a' in the trail
+    index_a = -1
+    for i in range(len(trail)):
+        if (trail[i] == a and trail[(i + 1) % len(trail)] == b) or (
+            trail[i] == b and trail[(i + 1) % len(trail)] == a
+        ):
+            index_a = i
+            break
+
+    # If edge 'a' is not found in the trail, return an empty cycle
+    if index_a == -1:
+        return cycle
+
+    # Extract the cycle starting from edge 'a'
+    for i in range(index_a, index_a + len(trail) + 1):
+        cycle.append(trail[i % len(trail)])
+
+        # Stop when we complete the cycle
+        if (trail[i % len(trail)] == a and trail[(i + 1) % len(trail)] == b) or (
+            trail[i % len(trail)] == b and trail[(i + 1) % len(trail)] == a
+        ):
+            break
+
+    return cycle
+
+
+def walk_to_path(walk, u, v):
+    path = []
+    u_found = False
+    v_found = False
+
+    for vertex in walk:
+        if vertex == u:
+            u_found = True
+        if u_found:
+            path.append(vertex)
+        if vertex == v:
+            v_found = True
+            break
+
+    if not (u_found and v_found):
+        return None  # Either u or v wasn't found in the walk
+
+    return path
 
 
 def exercicio5_9(grafo):
