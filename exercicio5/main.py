@@ -256,6 +256,22 @@ def exercicio5_9(grafo):
     else:
         print("Nenhum ciclo com grau >= 2 encontrado.")
 
+    # Exercise E.1
+    # Test find_cycle_with_edge with grafo edges
+    edge_to_find = (2, 3)
+    result_cycle = find_cycle_with_edge(grafo.vertices, edge_to_find)
+    print("Cycle with edge a:", result_cycle)
+
+    # Exercise E.2
+    walk_between_u_and_v = [1, 3, 4, 2, 5]
+    u_vertex = 1
+    v_vertex = 2
+    result_path = walk_to_path(walk_between_u_and_v, u_vertex, v_vertex)
+    if result_path is None:
+        print("No valid path between u and v found.")
+    else:
+        print("Path between u and v:", result_path)
+
 
 def main():
     grafo = createGraph()
