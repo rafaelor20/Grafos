@@ -150,8 +150,11 @@ def busca_ciclo(grafo):
 def buscar_ciclo_com_g_v_maior_igual_2(grafo):
     for vertice in range(len(grafo.vertices)):
         if grafo.calcular_grau(vertice) >= 2:
-            ciclo = busca_em_profundidade_ciclo_com_g_v_maior_igual_2(grafo, vertice)
-            if ciclo is not None:
+            ciclo = []
+            visitados = [False] * len(grafo.vertices)
+            stack = []
+
+            if busca_em_profundidade_ciclo(grafo, vertice, visitados, stack, ciclo):
                 return ciclo
 
 
