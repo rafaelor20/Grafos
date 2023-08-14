@@ -208,6 +208,22 @@ def walk_to_path(walk, u, v):
     return path
 
 
+def find_walk(grafo, vertice_atual, vertice_destino, visitados, walk):
+    visitados[vertice_atual] = True
+    walk.append(vertice_atual)
+
+    if vertice_atual == vertice_destino:
+        return True
+
+    for vizinho in grafo.adjacencia[vertice_atual]:
+        if not visitados[vizinho]:
+            if find_walk(grafo, vizinho, vertice_destino, visitados, walk):
+                return True
+
+    walk.pop()
+    return False
+
+
 def exercicio5_9(grafo):
     # Exercise 5.2
     passeio = Passeio()
@@ -266,14 +282,21 @@ def exercicio5_9(grafo):
     print("Cycle with edge a:", result_cycle)
 
     # Exercise E.2
-    walk_between_u_and_v = [1, 3, 4, 2, 5]
     u_vertex = 1
     v_vertex = 2
-    result_path = walk_to_path(walk_between_u_and_v, u_vertex, v_vertex)
-    if result_path is None:
-        print("No valid path between u and v found.")
+    walk_between_u_and_v = []
+    visited = [False] * len(grafo.vertices)
+    walk_found = find_walk(grafo, u_vertex, v_vertex, visited, walk_between_u_and_v)
+
+    if walk_found:
+        # Test walk_to_path with the grafo walk
+        result_path = walk_to_path(walk_between_u_and_v, u_vertex, v_vertex)
+        if result_path is None:
+            print("No valid path between u and v found.")
+        else:
+            print("Path between u and v:", result_path)
     else:
-        print("Path between u and v:", result_path)
+        print("No walk between u and v found in the grafo.")
 
 
 def main():
