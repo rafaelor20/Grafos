@@ -226,6 +226,9 @@ def find_walk(grafo, vertice_atual, vertice_destino, visitados, walk):
 
 def exercicio5_9(grafo):
     # Exercise 5.2
+    print("Exercise 5.2")
+    print("")
+
     passeio = Passeio()
     passeio.adicionar_vertice(1)
     passeio.adicionar_vertice(3)
@@ -234,28 +237,53 @@ def exercicio5_9(grafo):
     passeio.adicionar_vertice(4)
     passeio.imprimir_passeio()
 
+    print("")
+
     # Exercise 5.3
+    print("Exercise 5.3")
+    print("")
+
     passeio.imprimir_reverso()
 
+    print("")
+
     # Exercise 5.4
+    print("Exercise 5.4")
+    print("")
+
     secao = passeio.obter_secao(1, 3)
     secao.imprimir_passeio()
 
+    print("")
+
     # Exercise 5.5
+    print("Exercise 5.5")
+    print("")
+
     passeio_v_x = Passeio()
     busca_em_profundidade_passeio(
         grafo, 1, 5, [False] * len(grafo.vertices), passeio_v_x
     )
     passeio_v_x.imprimir_passeio()
 
+    print("")
+
     # Exercise 5.6
+    print("Exercise 5.6")
+    print("")
+
     caminho_v_x = Passeio()
     busca_em_profundidade_caminho(
         grafo, 1, 5, [False] * len(grafo.vertices), caminho_v_x
     )
     caminho_v_x.imprimir_passeio()
 
+    print("")
+
     # Exercise 5.7
+    print("Exercise 5.7")
+    print("")
+
     ciclo = busca_ciclo(grafo)
     if ciclo is not None:
         print("O grafo possui um ciclo:")
@@ -265,7 +293,12 @@ def exercicio5_9(grafo):
     else:
         print("O grafo não possui ciclo.")
 
+    print("")
+
     # Exercise 5.8
+    print("Exercise 5.8")
+    print("")
+
     ciclo_g_v_maior_igual_2 = buscar_ciclo_com_g_v_maior_igual_2(grafo)
     if ciclo_g_v_maior_igual_2 is not None:
         print("Ciclo com grau >= 2 encontrado:")
@@ -275,13 +308,22 @@ def exercicio5_9(grafo):
     else:
         print("Nenhum ciclo com grau >= 2 encontrado.")
 
+    print("")
+
     # Exercise E.1
-    # Test find_cycle_with_edge with grafo edges
+    print("Exercise E.1")
+    print("")
+
     edge_to_find = (2, 3)
     result_cycle = find_cycle_with_edge(grafo.vertices, edge_to_find)
     print("Cycle with edge a:", result_cycle)
 
+    print("")
+
     # Exercise E.2
+    print("Exercise E.2")
+    print("")
+
     u_vertex = 1
     v_vertex = 2
     walk_between_u_and_v = []
@@ -297,6 +339,8 @@ def exercicio5_9(grafo):
             print("Path between u and v:", result_path)
     else:
         print("No walk between u and v found in the grafo.")
+
+    print("")
 
 
 def main():

@@ -90,7 +90,7 @@ def createCompleteKnGraph(number):
     return grafoKn
 
 
-def creaeKRegularGraph(n, k):
+def createKRegularGraph(n, k):
     # Check if k is valid for a regular graph
     if k >= n or k % 2 != 0:
         raise ValueError("Invalid degree for a regular graph")
@@ -142,7 +142,7 @@ def exemploCreateCompleteKnGraph():
 
 
 # Exemplo creaeKRegularGraph
-def exemploCreaeKRegularGraph():
+def exemploCreateKRegularGraph():
     n = 8
     k = 4
     grafoKRegular = creaeKRegularGraph(n, k)
@@ -179,5 +179,5 @@ def exemploIsBipartite():
 
 
 exemploCreateCompleteKnGraph()
-exemploCreaeKRegularGraph()
+exemploCreateKRegularGraph()
 exemploIsBipartite()

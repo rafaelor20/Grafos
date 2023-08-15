@@ -1,12 +1,5 @@
-import tkinter as tk
 import math
-
-
-class Vertice:
-    def __init__(self, indice, rotulo):
-        self.indice = indice
-        self.rotulo = rotulo
-        self.grau = 0
+from vertice import Vertice
 
 
 class GrafoListaAdjacencia:
