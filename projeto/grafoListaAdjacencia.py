@@ -8,6 +8,108 @@ class GrafoListaAdjacencia:
         self.vertices = []
         self.num_arestas = 0
         self.adjacencia = [[] for _ in range(max_vertices)]
+        self.capacidades = [[0] * max_vertices for _ in range(max_vertices)]
+
+    def calcular_fluxo_maximo(self, indice_origem, indice_destino):
+        self.inicializar_fluxo()  # Inicializa a matriz de fluxo
+        max_fluxo = 0  # Inicializa o fluxo máximo
+
+        while True:
+            # Encontra um caminho aumentante usando a busca em largura
+            caminho_aumentante = self.encontrar_caminho_aumentante(
+                indice_origem, indice_destino
+            )
+
+            if not caminho_aumentante:
+                break  # Se não há mais caminhos aumentantes, saia do loop
+
+            # Encontra a capacidade mínima residual ao longo do caminho
+            capacidade_residual_minima = float("inf")
+            for i in range(len(caminho_aumentante) - 1):
+                u = caminho_aumentante[i]
+                v = caminho_aumentante[i + 1]
+                capacidade_residual = 0
+
+                # Encontra a capacidade residual da aresta (u, v)
+                for j in range(len(self.adjacencia[u])):
+                    if self.adjacencia[u][j] == v:
+                        capacidade_residual = 1  # Supomos capacidade unitária
+
+                capacidade_residual_minima = min(
+                    capacidade_residual_minima, capacidade_residual
+                )
+
+            # Atualiza o fluxo ao longo do caminho
+            for i in range(len(caminho_aumentante) - 1):
+                u = caminho_aumentante[i]
+                v = caminho_aumentante[i + 1]
+
+                # Incrementa o fluxo da aresta (u, v) e decrementa o fluxo da aresta (v, u)
+                self.adicionar_fluxo(u, v, capacidade_residual_minima)
+                self.adicionar_fluxo(v, u, -capacidade_residual_minima)
+
+            # Atualiza o fluxo máximo
+            max_fluxo += capacidade_residual_minima
+
+        return max_fluxo
+
+    def encontrar_caminho_aumentante(self, indice_origem, indice_destino):
+        visitados = [False] * len(self.vertices)
+        pais = [-1] * len(self.vertices)  # Rastreia os pais dos vértices no caminho
+        capacidade_minima = [float("inf")] * len(self.vertices)
+
+        fila = [indice_origem]
+        visitados[indice_origem] = True
+
+        while fila:
+            vertice_atual = fila.pop(0)
+
+            for vizinho in self.adjacencia[vertice_atual]:
+                if not visitados[vizinho]:
+                    capacidade_residual = self.capacidade_residual(
+                        vertice_atual, vizinho
+                    )
+
+                    if capacidade_residual > 0:
+                        capacidade_minima[vizinho] = min(
+                            capacidade_minima[vertice_atual], capacidade_residual
+                        )
+                        pais[vizinho] = vertice_atual
+                        visitados[vizinho] = True
+                        fila.append(vizinho)
+
+        if not visitados[indice_destino]:
+            return None  # Não há caminho aumentante
+
+        caminho = []
+        vertice_atual = indice_destino
+        while vertice_atual != -1:
+            caminho.insert(0, vertice_atual)
+            vertice_atual = pais[vertice_atual]
+
+        return caminho
+
+    def capacidade_residual(self, u, v):
+        # Calcula a capacidade residual da aresta (u, v)
+        # Retorna 0 se não houver conexão
+        for i, j in enumerate(self.adjacencia[u]):
+            if j == v:
+                # Suponha que a capacidade seja uma propriedade da aresta ou uma matriz de capacidades
+                capacidade = self.capacidade_da_aresta(u, i)
+                return capacidade - self.fluxo[u][i]
+
+        return 0  # Não há conexão entre u e v
+
+    def capacidade_da_aresta(self, u, i):
+        # Retorna a capacidade da aresta (u, adjacencia[u][i])
+        return self.capacidades[u][self.adjacencia[u][i]]
+
+    def definir_capacidade_aresta(self, u, v, capacidade):
+        # Define a capacidade da aresta (u, v) como o valor especificado
+        if 0 <= u < self.max_vertices and 0 <= v < self.max_vertices:
+            self.capacidades[u][v] = capacidade
+        else:
+            raise IndexError("Índices de vértice inválidos")
 
     def adicionar_vertice(self, rotulo):
         indice = len(self.vertices)
