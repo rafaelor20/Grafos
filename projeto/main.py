@@ -224,125 +224,6 @@ def find_walk(grafo, vertice_atual, vertice_destino, visitados, walk):
     return False
 
 
-def exercicio5_9(grafo):
-    # Exercise 5.2
-    print("Exercise 5.2")
-    print("")
-
-    passeio = Passeio()
-    passeio.adicionar_vertice(1)
-    passeio.adicionar_vertice(3)
-    passeio.adicionar_vertice(2)
-    passeio.adicionar_vertice(5)
-    passeio.adicionar_vertice(4)
-    passeio.imprimir_passeio()
-
-    print("")
-
-    # Exercise 5.3
-    print("Exercise 5.3")
-    print("")
-
-    passeio.imprimir_reverso()
-
-    print("")
-
-    # Exercise 5.4
-    print("Exercise 5.4")
-    print("")
-
-    secao = passeio.obter_secao(1, 3)
-    secao.imprimir_passeio()
-
-    print("")
-
-    # Exercise 5.5
-    print("Exercise 5.5")
-    print("")
-
-    passeio_v_x = Passeio()
-    busca_em_profundidade_passeio(
-        grafo, 1, 5, [False] * len(grafo.vertices), passeio_v_x
-    )
-    passeio_v_x.imprimir_passeio()
-
-    print("")
-
-    # Exercise 5.6
-    print("Exercise 5.6")
-    print("")
-
-    caminho_v_x = Passeio()
-    busca_em_profundidade_caminho(
-        grafo, 1, 5, [False] * len(grafo.vertices), caminho_v_x
-    )
-    caminho_v_x.imprimir_passeio()
-
-    print("")
-
-    # Exercise 5.7
-    print("Exercise 5.7")
-    print("")
-
-    ciclo = busca_ciclo(grafo)
-    if ciclo is not None:
-        print("O grafo possui um ciclo:")
-        for vertice in ciclo:
-            print(vertice, end=" ")
-        print()
-    else:
-        print("O grafo não possui ciclo.")
-
-    print("")
-
-    # Exercise 5.8
-    print("Exercise 5.8")
-    print("")
-
-    ciclo_g_v_maior_igual_2 = buscar_ciclo_com_g_v_maior_igual_2(grafo)
-    if ciclo_g_v_maior_igual_2 is not None:
-        print("Ciclo com grau >= 2 encontrado:")
-        for vertice in ciclo_g_v_maior_igual_2:
-            print(vertice, end=" ")
-        print()
-    else:
-        print("Nenhum ciclo com grau >= 2 encontrado.")
-
-    print("")
-
-    # Exercise E.1
-    print("Exercise E.1")
-    print("")
-
-    edge_to_find = (2, 3)
-    result_cycle = find_cycle_with_edge(grafo.vertices, edge_to_find)
-    print("Cycle with edge a:", result_cycle)
-
-    print("")
-
-    # Exercise E.2
-    print("Exercise E.2")
-    print("")
-
-    u_vertex = 1
-    v_vertex = 2
-    walk_between_u_and_v = []
-    visited = [False] * len(grafo.vertices)
-    walk_found = find_walk(grafo, u_vertex, v_vertex, visited, walk_between_u_and_v)
-
-    if walk_found:
-        # Test walk_to_path with the grafo walk
-        result_path = walk_to_path(walk_between_u_and_v, u_vertex, v_vertex)
-        if result_path is None:
-            print("No valid path between u and v found.")
-        else:
-            print("Path between u and v:", result_path)
-    else:
-        print("No walk between u and v found in the grafo.")
-
-    print("")
-
-
 def main():
     grafo = GrafoListaAdjacencia(4)
 
@@ -361,6 +242,10 @@ def main():
 
     # Calcule o fluxo máximo de A para D
     fluxo_maximo = grafo.calcular_fluxo_maximo(0, 3)
+    capacidade_residual = grafo.capacidade_residual(0, 3)
+    capacidade_da_aresta = grafo.capacidade_da_aresta(0, 3)
+    print("Capacidade residual: ", capacidade_residual)
+    print("capacidade da aresta: ", capacidade_da_aresta)
     print("Fluxo Máximo de A para D:", fluxo_maximo)
 
 

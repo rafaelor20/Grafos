@@ -101,8 +101,18 @@ class GrafoListaAdjacencia:
         return 0  # Não há conexão entre u e v
 
     def capacidade_da_aresta(self, u, i):
-        # Retorna a capacidade da aresta (u, adjacencia[u][i])
-        return self.capacidades[u][self.adjacencia[u][i]]
+        # Verifica se u é um índice de vértice válido
+        if 0 <= u < self.max_vertices:
+            # Verifica se i é um índice de vizinho válido
+            if 0 <= i < len(self.adjacencia[u]):
+                v = self.adjacencia[u][i]
+                # Verifica se v é um índice de vértice válido
+                if 0 <= v < self.max_vertices:
+                    # Retorna a capacidade da aresta (u, v)
+                    return self.capacidades[u][v]
+
+        # Se algum dos índices for inválido ou a conexão não existir, retorne 0 ou outro valor padrão
+        return 0
 
     def definir_capacidade_aresta(self, u, v, capacidade):
         # Define a capacidade da aresta (u, v) como o valor especificado
