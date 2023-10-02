@@ -227,13 +227,20 @@ def find_walk(grafo, vertice_atual, vertice_destino, visitados, walk):
 def main():
     grafo = GrafoListaAdjacencia(4)
 
-    # Adicione os vértices
-    grafo.adicionar_vertice("A")
-    grafo.adicionar_vertice("B")
-    grafo.adicionar_vertice("C")
-    grafo.adicionar_vertice("D")
+    # Adicione os vértices representando os armazéns
+    grafo.adicionar_vertice("A")  # 0
+    grafo.adicionar_vertice("B")  # 1
+    grafo.adicionar_vertice("C")  # 2
+    grafo.adicionar_vertice("D")  # 3
 
-    # Defina as capacidades das arestas (representando rotas e suas capacidades)
+    # Adicione as arestas que conectam os vértices
+    grafo.adicionar_aresta(0, 1)  # Conecta A a B
+    grafo.adicionar_aresta(0, 2)  # Conecta A a C
+    grafo.adicionar_aresta(1, 2)  # Conecta B a C
+    grafo.adicionar_aresta(1, 3)  # Conecta B a D
+    grafo.adicionar_aresta(2, 3)  # Conecta C a D
+
+    # Defina as capacidades das arestas
     grafo.definir_capacidade_aresta(0, 1, 10)  # Rota de A para B com capacidade 10
     grafo.definir_capacidade_aresta(0, 2, 5)  # Rota de A para C com capacidade 5
     grafo.definir_capacidade_aresta(1, 2, 15)  # Rota de B para C com capacidade 15
@@ -242,11 +249,13 @@ def main():
 
     # Calcule o fluxo máximo de A para D
     fluxo_maximo = grafo.calcular_fluxo_maximo(0, 3)
-    capacidade_residual = grafo.capacidade_residual(0, 3)
-    capacidade_da_aresta = grafo.capacidade_da_aresta(0, 3)
-    print("Capacidade residual: ", capacidade_residual)
-    print("capacidade da aresta: ", capacidade_da_aresta)
     print("Fluxo Máximo de A para D:", fluxo_maximo)
+
+    capacidade_residual = grafo.capacidade_residual(0, 2)
+    print("Capacidade residual: ", capacidade_residual)
+
+    capacidade_da_aresta = grafo.capacidade_da_aresta(0, 1)
+    print("capacidade da aresta: ", capacidade_da_aresta)
 
 
 if __name__ == "__main__":
