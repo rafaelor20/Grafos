@@ -9,6 +9,7 @@ class GrafoListaAdjacencia:
         self.num_arestas = 0
         self.adjacencia = [[] for _ in range(max_vertices)]
         self.capacidades = [[0] * max_vertices for _ in range(max_vertices)]
+        self.fluxo = [[0] * max_vertices for _ in range(max_vertices)]
 
     def calcular_fluxo_maximo(self, indice_origem, indice_destino):
         self.inicializar_fluxo()  # Inicializa a matriz de fluxo
@@ -25,7 +26,7 @@ class GrafoListaAdjacencia:
 
             # Encontra a capacidade mínima residual ao longo do caminho
             capacidade_residual_minima = float("inf")
-            print(capacidade_residual_minima)
+
             for i in range(len(caminho_aumentante) - 1):
                 u = caminho_aumentante[i]
                 v = caminho_aumentante[i + 1]
@@ -80,7 +81,7 @@ class GrafoListaAdjacencia:
                         fila.append(vizinho)
 
         if not visitados[indice_destino]:
-            return None  # Não há caminho aumentante
+            return None  # No augmenting path found
 
         caminho = []
         vertice_atual = indice_destino
@@ -91,15 +92,7 @@ class GrafoListaAdjacencia:
         return caminho
 
     def capacidade_residual(self, u, v):
-        # Calcula a capacidade residual da aresta (u, v)
-        # Retorna 0 se não houver conexão
-        for i, neighbor in enumerate(self.adjacencia[u]):
-            if neighbor == v:
-                # Obtenha a capacidade real da aresta (u, v) e subtraia o fluxo atual
-                capacidade_real = self.capacidades[u][i] - self.fluxo[u][i]
-                return capacidade_real
-
-        return 0  # Não há conexão entre u e v
+        return self.capacidades[u][v] - self.fluxo[u][v]
 
     def capacidade_da_aresta(self, u, i):
         # Verifica se u é um índice de vértice válido
@@ -116,7 +109,6 @@ class GrafoListaAdjacencia:
         return 0
 
     def definir_capacidade_aresta(self, u, v, capacidade):
-        # Define a capacidade da aresta (u, v) como o valor especificado
         if 0 <= u < self.max_vertices and 0 <= v < self.max_vertices:
             self.capacidades[u][v] = capacidade
         else:
