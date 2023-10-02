@@ -25,6 +25,7 @@ class GrafoListaAdjacencia:
 
             # Encontra a capacidade mínima residual ao longo do caminho
             capacidade_residual_minima = float("inf")
+            print(capacidade_residual_minima)
             for i in range(len(caminho_aumentante) - 1):
                 u = caminho_aumentante[i]
                 v = caminho_aumentante[i + 1]
@@ -92,11 +93,11 @@ class GrafoListaAdjacencia:
     def capacidade_residual(self, u, v):
         # Calcula a capacidade residual da aresta (u, v)
         # Retorna 0 se não houver conexão
-        for i, j in enumerate(self.adjacencia[u]):
-            if j == v:
-                # Suponha que a capacidade seja uma propriedade da aresta ou uma matriz de capacidades
-                capacidade = self.capacidade_da_aresta(u, i)
-                return capacidade - self.fluxo[u][i]
+        for i, neighbor in enumerate(self.adjacencia[u]):
+            if neighbor == v:
+                # Obtenha a capacidade real da aresta (u, v) e subtraia o fluxo atual
+                capacidade_real = self.capacidades[u][i] - self.fluxo[u][i]
+                return capacidade_real
 
         return 0  # Não há conexão entre u e v
 
