@@ -241,17 +241,17 @@ def main():
     grafo.adicionar_aresta(2, 3)  # Conecta C a D
 
     # Defina as capacidades das arestas
-    grafo.definir_capacidade_aresta(0, 1, 10)  # Rota de A para B com capacidade 10
-    grafo.definir_capacidade_aresta(0, 2, 10)  # Rota de A para C com capacidade 5
-    grafo.definir_capacidade_aresta(1, 2, 15)  # Rota de B para C com capacidade 15
+    grafo.definir_capacidade_aresta(0, 1, 15)  # Rota de A para B com capacidade 10
+    grafo.definir_capacidade_aresta(0, 2, 15)  # Rota de A para C com capacidade 5
+    grafo.definir_capacidade_aresta(1, 2, 10)  # Rota de B para C com capacidade 15
     grafo.definir_capacidade_aresta(1, 3, 10)  # Rota de B para D com capacidade 10
     grafo.definir_capacidade_aresta(2, 3, 10)  # Rota de C para D com capacidade 10
 
     # Calcule o fluxo máximo de A para D
     fluxo_maximo = grafo.calcular_fluxo_maximo(0, 3)
-    print("Fluxo Máximo de A para B:", fluxo_maximo)
+    print("Fluxo Máximo de A para D:", fluxo_maximo)
 
-    capacidade_residual = grafo.capacidade_residual(0, 1)
+    capacidade_residual = grafo.capacidade_residual(0, 3)
     print("Capacidade residual: ", capacidade_residual)
 
     capacidade_da_aresta = grafo.capacidade_da_aresta(0, 1)
