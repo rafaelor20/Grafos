@@ -251,9 +251,11 @@ def main():
     fluxo_maximo = grafo.calcular_fluxo_maximo(0, 3)
     print("Fluxo Máximo de A para D:", fluxo_maximo)
 
-    capacidade_residual = grafo.capacidade_residual(0, 3)
+    # Calcule a capacidade residual de A para B
+    capacidade_residual = grafo.capacidade_residual(0, 1)
     print("Capacidade residual: ", capacidade_residual)
 
+    # Calcule a capacidade da aresta de A para B
     capacidade_da_aresta = grafo.capacidade_da_aresta(0, 1)
     print("capacidade da aresta: ", capacidade_da_aresta)
 
