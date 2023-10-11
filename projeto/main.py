@@ -248,7 +248,7 @@ def main():
     grafo.definir_capacidade_aresta(2, 3, 10)  # Rota de C para D com capacidade 10
 
     # Calcule o fluxo máximo de A para D
-    fluxo_maximo = grafo.calcular_fluxo_maximo(0, 3)
+    fluxo_maximo = grafo.calcular_fluxo_maximo(0, 2)
     print("Fluxo Máximo de A para D:", fluxo_maximo)
 
     # Calcule a capacidade residual de A para B
@@ -258,6 +258,7 @@ def main():
     # Calcule a capacidade da aresta de A para B
     capacidade_da_aresta = grafo.capacidade_da_aresta(0, 1)
     print("capacidade da aresta: ", capacidade_da_aresta)
+    print(grafo.capacidades)
 
 
 if __name__ == "__main__":
